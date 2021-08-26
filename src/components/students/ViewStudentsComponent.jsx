@@ -40,7 +40,7 @@ class ViewStudentsComponent extends Component {
                             <label> Sex: { this.state.students.sex }</label>
                         </div>
                         <div className = "row">
-                            <label> Group: { this.state.students.group }</label>
+                            <label> Group: { this.state.students.group_id }</label>
                         </div>
                         <div className = "row">
                             <label> Born: { this.state.students.born_date }</label>

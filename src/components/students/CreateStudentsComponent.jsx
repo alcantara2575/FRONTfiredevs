@@ -89,7 +89,7 @@ class CreateStudentsComponent extends Component {
     }
 
     changeCityHandler= (event) => {
-        this.setState({city: event.target.value});
+        this.setState({city: document.getElementById("city-select").value});
     }
 
     changeAgeHandler= (event) => {
@@ -97,11 +97,11 @@ class CreateStudentsComponent extends Component {
     }
 
     changeSexHandler= (event) => {
-        this.setState({sex: event.target.value});
+        this.setState({sex: document.getElementById("sex-select").value});
     }
 
     changeGroupHandler= (event) => {
-        this.setState({group_id: event.target.value});
+        this.setState({group_id: document.getElementById("group-select").value});
     }
 
     changeBornHandler= (event) => {
@@ -136,9 +136,28 @@ class CreateStudentsComponent extends Component {
                                             <input placeholder="Name" name="Name" className="form-control" 
                                                 value={this.state.name} onChange={this.changeNameHandler}/>
                                         </div>
+                                        
+                                        <div id="email" className = "form-group">
+                                            <label> Email: </label>
+                                            <input placeholder="tuemail@gmail.com" name="Email" className="form-control" 
+                                                value={this.state.email} onChange={this.changeEmailHandler}/>
+                                        </div>
+                                        
+                                        <div id="age" className = "form-group">
+                                            <label> Age: </label>
+                                            <input placeholder="Age" name="Age" className="form-control" 
+                                                value={this.state.age} onChange={this.changeAgeHandler}/>
+                                        </div>
+                                        
+                                        <div id="born" className = "form-group">
+                                            <label> Born: </label>
+                                            <input placeholder="Born" name="Born" className="form-control" 
+                                                value={this.state.born_date.slice(0, 10)} onChange={this.changeBornHandler}/>
+                                        </div>
+
                                         <div id="city" className = "form-group">
                                             <label> City: </label>
-                                            <select class="form-select" aria-label="Default select example" onChange={this.changeTeacherHandler}>
+                                            <select id="city-select" class="form-select" aria-label="Default select example" onChange={this.changeCityHandler}>
                                                 <option selected="true" disabled>Open this select menu</option>
                                                 {
                                                     CityData.map( 
@@ -148,24 +167,19 @@ class CreateStudentsComponent extends Component {
                                                 }
                                             </select>
                                         </div>
-                                        <div id="email" className = "form-group">
-                                            <label> Email: </label>
-                                            <input placeholder="tuemail@gmail.com" name="Email" className="form-control" 
-                                                value={this.state.email} onChange={this.changeEmailHandler}/>
-                                        </div>
-                                        <div id="age" className = "form-group">
-                                            <label> Age: </label>
-                                            <input placeholder="Age" name="Age" className="form-control" 
-                                                value={this.state.age} onChange={this.changeAgeHandler}/>
-                                        </div>
+                                        
                                         <div id="sex" className = "form-group">
-                                            <label> Sex: </label>
-                                            <input placeholder="Sex" name="Sex" className="form-control" 
-                                                value={this.state.sex} onChange={this.changeSexHandler}/>
+                                        <label> Sex: </label>
+                                            <select id="sex-select" class="form-select" aria-label="Default select example" onChange={this.changeSexHandler}>
+                                                <option selected="true" disabled>Open this select menu</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
                                         </div>
+                                        
                                         <div id="group" className = "form-group">
                                             <label> Group: </label>
-                                            <select class="form-select" aria-label="Default select example" onChange={this.changeTeacherHandler}>
+                                            <select id="group-select" class="form-select" aria-label="Default select example" onChange={this.changeGroupHandler}>
                                                 <option selected="true" disabled>Open this select menu</option>
                                                 {
                                                     this.state.groups.map( 
@@ -175,12 +189,7 @@ class CreateStudentsComponent extends Component {
                                                 }
                                             </select>
                                         </div>
-                                        <div id="born" className = "form-group">
-                                            <label> Born: </label>
-                                            <input placeholder="Born" name="Born" className="form-control" 
-                                                value={this.state.born_date} onChange={this.changeBornHandler}/>
-                                        </div>
-
+                                        
                                         <button className="btn btn-success mt-1" onClick={this.saveOrUpdateStudent}>Save</button>
                                         <button className="btn btn-danger mt-1" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
                                     </form>

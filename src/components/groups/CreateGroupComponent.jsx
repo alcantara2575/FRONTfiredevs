@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import GroupsService from '../../services/groupService';
 
+import TeacherData from '../../cache/teachers.json'
+
 class CreateGroupsComponent extends Component {
     constructor(props) {
         super(props)
@@ -88,8 +90,18 @@ class CreateGroupsComponent extends Component {
                                         </div>
                                         <div className = "form-group">
                                             <label> Teacher: </label>
-                                            <input placeholder="Teacher Name" name="City" className="form-control" 
-                                                value={this.state.teacher} onChange={this.changeTeacherHandler}/>
+                                            <select class="form-select" aria-label="Default select example" onChange={this.changeTeacherHandler}>
+                                                <option selected="true" disabled>Open this select menu</option>
+                                                {
+                                                TeacherData.map( 
+                                                    teachersName => 
+                                                        <option value={teachersName}>{teachersName}</option>
+                                                        
+                                                    )
+                                                }
+                                            </select>
+                                            {/* <input placeholder="Teacher Name" name="City" className="form-control" 
+                                                value={this.state.teacher} onChange={this.changeTeacherHandler}/> */}
                                         </div>
 
                                         <button className="btn btn-success mt-1" onClick={this.saveOrUpdateGroup}>Save</button>

@@ -30,7 +30,6 @@ class CreateStudentsComponent extends Component {
         this.saveOrUpdateStudent = this.saveOrUpdateStudent.bind(this);
     }
 
-    // step 3
     componentDidMount(){
 
         GroupsService.getGroups().then( (res) =>{
@@ -56,30 +55,50 @@ class CreateStudentsComponent extends Component {
             });
         }        
     }
+
     saveOrUpdateStudent = (e) => {
         e.preventDefault();
-        let students = {name: this.state.name, 
-            email: this.state.email, 
-            city: this.state.city, 
-            age: this.state.age, 
-            sex: this.state.sex, 
-            group_id: this.state.group_id, 
-            born_date: this.state.born_date
-        };
-        console.log('students => ' + JSON.stringify(students));
-
-        // step 5
-        if(this.state.id === '_add'){
-            StudentsService.createStudents(students).then(res =>{
-                this.props.history.push('/students');
-            });
-        }else{
-            StudentsService.updateStudents(students, this.state.id).then( res => {
-                this.props.history.push('/students');
-            });
+        //Validate email
+        if (this.validateEmail(this.state.email)){
+            //Validate age
+            if ( this.validateAge(this.state.age)){
+                let students = {name: this.state.name, 
+                    email: this.state.email, 
+                    city: this.state.city, 
+                    age: this.state.age, 
+                    sex: this.state.sex, 
+                    group_id: this.state.group_id, 
+                    born_date: this.state.born_date
+                };
+                    // step 5
+                if(this.state.id === '_add'){
+                    StudentsService.createStudents(students).then(res =>{
+                        this.props.history.push('/students');
+                    });
+                }else{
+                    StudentsService.updateStudents(students, this.state.id).then( res => {
+                        this.props.history.push('/students');
+                    });
+                }
+            } else {
+                window.alert("Review age data");
+            }
         }
+        else {
+            window.alert("Review email address");
+        }
+
     }
     
+    validateEmail(email){
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    validateAge(age){
+        return ((this.state.age >= 10) && (this.state.age <= 15)) ? true : false
+    }
+
     changeNameHandler= (event) => {
         this.setState({name: event.target.value});
     }
@@ -87,6 +106,7 @@ class CreateStudentsComponent extends Component {
     changeEmailHandler= (event) => {
         this.setState({email: event.target.value});
     }
+
 
     changeCityHandler= (event) => {
         this.setState({city: document.getElementById("city-select").value});
@@ -150,7 +170,7 @@ class CreateStudentsComponent extends Component {
                                         </div>
                                         
                                         <div id="born" className = "form-group">
-                                            <label> Born: </label>
+                                            <label> Born Date (YY-MM-DD): </label>
                                             <input placeholder="Born" name="Born" className="form-control" 
                                                 value={this.state.born_date.slice(0, 10)} onChange={this.changeBornHandler}/>
                                         </div>

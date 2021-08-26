@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import StudentsService from '../../services/studentService';
+import GroupsService from '../../services/groupService';
+
+import CityData from '../../cache/citys.json'
 
 class CreateStudentsComponent extends Component {
     constructor(props) {
@@ -14,7 +17,8 @@ class CreateStudentsComponent extends Component {
             age: '',
             group_id: '',
             born_date: '',
-            email: ''
+            email: '',
+            groups: []
         }
         this.changeNameHandler = this.changeNameHandler.bind(this);
         this.changeEmailHandler = this.changeEmailHandler.bind(this);
@@ -29,6 +33,12 @@ class CreateStudentsComponent extends Component {
     // step 3
     componentDidMount(){
 
+        GroupsService.getGroups().then( (res) =>{
+            let groups = res.data;
+            this.setState({
+                groups: groups
+            })
+        });
         // step 4
         if(this.state.id === '_add'){
             return
@@ -121,37 +131,51 @@ class CreateStudentsComponent extends Component {
                                 }
                                 <div className = "card-body">
                                     <form>
-                                        <div className = "form-group">
+                                        <div id="name" className = "form-group">
                                             <label> Name: </label>
                                             <input placeholder="Name" name="Name" className="form-control" 
                                                 value={this.state.name} onChange={this.changeNameHandler}/>
                                         </div>
-                                        <div className = "form-group">
+                                        <div id="city" className = "form-group">
                                             <label> City: </label>
-                                            <input placeholder="Havana" name="City" className="form-control" 
-                                                value={this.state.city} onChange={this.changeCityHandler}/>
+                                            <select class="form-select" aria-label="Default select example" onChange={this.changeTeacherHandler}>
+                                                <option selected="true" disabled>Open this select menu</option>
+                                                {
+                                                    CityData.map( 
+                                                        cityName => 
+                                                            <option value={cityName}>{cityName}</option>
+                                                    )
+                                                }
+                                            </select>
                                         </div>
-                                        <div className = "form-group">
+                                        <div id="email" className = "form-group">
                                             <label> Email: </label>
                                             <input placeholder="tuemail@gmail.com" name="Email" className="form-control" 
                                                 value={this.state.email} onChange={this.changeEmailHandler}/>
                                         </div>
-                                        <div className = "form-group">
+                                        <div id="age" className = "form-group">
                                             <label> Age: </label>
                                             <input placeholder="Age" name="Age" className="form-control" 
                                                 value={this.state.age} onChange={this.changeAgeHandler}/>
                                         </div>
-                                        <div className = "form-group">
+                                        <div id="sex" className = "form-group">
                                             <label> Sex: </label>
                                             <input placeholder="Sex" name="Sex" className="form-control" 
                                                 value={this.state.sex} onChange={this.changeSexHandler}/>
                                         </div>
-                                        <div className = "form-group">
+                                        <div id="group" className = "form-group">
                                             <label> Group: </label>
-                                            <input placeholder="Group" name="Group" className="form-control" 
-                                                value={this.state.group_id} onChange={this.changeGroupHandler}/>
+                                            <select class="form-select" aria-label="Default select example" onChange={this.changeTeacherHandler}>
+                                                <option selected="true" disabled>Open this select menu</option>
+                                                {
+                                                    this.state.groups.map( 
+                                                        groups => 
+                                                            <option value={groups.name}>{groups.name}</option>
+                                                    )
+                                                }
+                                            </select>
                                         </div>
-                                        <div className = "form-group">
+                                        <div id="born" className = "form-group">
                                             <label> Born: </label>
                                             <input placeholder="Born" name="Born" className="form-control" 
                                                 value={this.state.born_date} onChange={this.changeBornHandler}/>

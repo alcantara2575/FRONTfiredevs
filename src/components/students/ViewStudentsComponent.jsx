@@ -7,7 +7,9 @@ class ViewStudentsComponent extends Component {
 
         this.state = {
             id: this.props.match.params.id,
-            students: {}
+            students: {
+                born_date : ''
+            }
         }
     }
 
@@ -43,7 +45,7 @@ class ViewStudentsComponent extends Component {
                             <label> Group: { this.state.students.group_id }</label>
                         </div>
                         <div className = "row">
-                            <label> Born: { this.state.students.born_date }</label>
+                            <label> Born: { this.state.students.born_date.slice(0, 10) }</label>
                         </div>
                     </div>
 
